@@ -152,6 +152,13 @@ Item {
         }
     }
 
+    OverlayBlur {
+        visible: actionsDrawer.opened
+        backgroundItem: slideshowView
+        overlayItem: actionsDrawer
+    }
+
+
     Item {
         id: actionsDrawer
         objectName: "actionsDrawer"

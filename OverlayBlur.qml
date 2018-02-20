@@ -22,17 +22,50 @@ FastBlur {
     id: overlayBlurEffect
     property var overlayItem
     property var backgroundItem
+    property alias live: overlayBlurShader.live
+    property var offset: Qt.point(0,0)
 
     anchors.fill: overlayItem
 
+    Behavior on opacity {UbuntuNumberAnimation {} }
+    Behavior on radius {UbuntuNumberAnimation {} }
+
+    Connections {
+        target:overlayItem
+        onXChanged: overlayBlurShader.updateRect();
+        onYChanged: overlayBlurShader.updateRect();
+        onWidthChanged: overlayBlurShader.updateRect();
+        onHeightChanged: overlayBlurShader.updateRect();
+        onScaleChanged: overlayBlurShader.updateRect();
+    }
+
+    Connections {
+        target:backgroundItem
+        onXChanged: overlayBlurShader.updateRect();
+        onYChanged: overlayBlurShader.updateRect();
+        onWidthChanged: overlayBlurShader.updateRect();
+        onHeightChanged: overlayBlurShader.updateRect();
+        onScaleChanged: overlayBlurShader.updateRect();
+    }
+
+    onOffsetChanged: overlayBlurShader.updateRect();
+
     radius: units.gu(2)
     source:  ShaderEffectSource {
+        id:overlayBlurShader
         clip: true
         sourceItem: backgroundItem
-        sourceRect: Qt.rect( overlayItem.mapToItem(backgroundItem).x,
-                             overlayItem.mapToItem(backgroundItem).y,
+        sourceRect: Qt.rect( overlayItem.mapToItem(backgroundItem).x + offset.x,
+                             overlayItem.mapToItem(backgroundItem).y+ offset.y,
                              overlayItem.width,
                              overlayItem.height )
         recursive: true
+
+        function updateRect() {
+            sourceRect =  Qt.rect( overlayItem.mapToItem(backgroundItem).x + offset.x,
+                                  overlayItem.mapToItem(backgroundItem).y+ offset.y,
+                                  overlayItem.width,
+                                  overlayItem.height );
+        }
     }
 }
