@@ -15,6 +15,9 @@ find_package(Qt5Qml)
 find_package(Qt5Quick)
 find_package(Qt5Multimedia)
 find_package(Qt5Gui)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(EXIV2 REQUIRED exiv2)
 
 find_program(INTLTOOL_MERGE intltool-merge)
 find_program(INTLTOOL_EXTRACT intltool-extract)
@@ -121,7 +124,7 @@ install(TARGETS ${CAMERA_APP}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=c++11 -Wall -Werror")
 
 file(GLOB QML_JS_FILES *.qml *.js *.png)
 

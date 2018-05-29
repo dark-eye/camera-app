@@ -1,3 +1,5 @@
+#include <exiv2/exiv2.hpp>
+
 #include <QtCore/QFile>
 #include <QImage>
 #include <QPainter>
@@ -16,6 +18,10 @@ AddDateStamp::AddDateStamp(QString inPath, QString dateFormat, QColor  stampColo
 
 void AddDateStamp::run() {
   try {
+      const char* exifPath = path.toUtf8().toStdString().c_str();
+      Exiv2::Image::AutoPtr oldExifImage = Exiv2::ImageFactory::open(exifPath);
+      oldExifImage->readMetadata();
+      Exiv2::ExifData &exifData = oldExifImage->exifData();
 
       QImage image = QImage(path);
       QDateTime now = QDateTime::currentDateTime();
@@ -42,6 +48,10 @@ void AddDateStamp::run() {
       success &= QFile::rename(tmpPath, path);
       if(success) {
           QFile::remove(backupFilePath);
+          Exiv2::Image::AutoPtr newExifImage = Exiv2::ImageFactory::open(exifPath);
+          newExifImage->setExifData(exifData);
+          newExifImage->writeMetadata();
+
       } else { //try and move the backup file back to it original name
           QFile::rename(backupFilePath, path);
       }
