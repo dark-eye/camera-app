@@ -124,7 +124,7 @@ install(TARGETS ${CAMERA_APP}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=c++11 -Wall -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=c++11 -Wall")
 
 file(GLOB QML_JS_FILES *.qml *.js *.png)
 

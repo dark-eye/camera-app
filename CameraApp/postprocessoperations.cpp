@@ -23,7 +23,7 @@ PostProcessOperations::PostProcessOperations(QObject *parent) :
 {
 }
 
-bool PostProcessOperations::addDateStamp(const QString & path, QString dateFormat, QColor  stampColor,float   opacity, int alignment)
+void PostProcessOperations::addDateStamp(const QString & path, QString dateFormat, QColor  stampColor,float   opacity, int alignment)
 {
 
     this->workingThread = new AddDateStamp(path, dateFormat, stampColor, opacity, alignment);

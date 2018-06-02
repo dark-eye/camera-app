@@ -28,7 +28,7 @@ class PostProcessOperations : public QObject
 
 public:
     explicit PostProcessOperations(QObject *parent = 0);
-    Q_INVOKABLE bool addDateStamp(const QString & path, QString dateFormat, QColor stampColor, float opacity, int alignment);
+    Q_INVOKABLE void addDateStamp(const QString & path, QString dateFormat, QColor stampColor, float opacity, int alignment);
 
 protected:
     QThread* workingThread;
