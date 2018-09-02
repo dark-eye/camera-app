@@ -1,7 +1,9 @@
+
 #ifndef ADDDATESTAMP_H
 #define ADDDATESTAMP_H
 
 #include <QThread>
+#include <qt5/QtCore/QString>
 
 class AddDateStamp : public QThread
 {
@@ -22,3 +24,4 @@ protected:
 };
 
 #endif // ADDDATESTAMP_H
+
